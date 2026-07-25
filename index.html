@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend Developer — PHP / Laravel | Portfolio & Web Projects</title>
+<meta name="description" content="Backend developer building web apps with PHP and Laravel. Browse the portfolio and get in touch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1220;
+    --bg-panel:#121B2E;
+    --bg-panel-alt:#17233A;
+    --text:#E7ECF5;
+    --text-dim:#93A1B8;
+    --text-faint:#5B6A87;
+    --accent:#E8A33D;
+    --accent-soft:rgba(232,163,61,0.14);
+    --teal:#45C4B0;
+    --teal-soft:rgba(69,196,176,0.14);
+    --border:#243050;
+    --radius:10px;
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(232,163,61,0.06), transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(69,196,176,0.05), transparent 40%);
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--accent);color:#0B1220;}
+
+  .editme{
+    border:1px dashed rgba(232,163,61,0.55);
+    background:rgba(232,163,61,0.06);
+    border-radius:6px;
+    padding:2px 8px;
+    font-size:0.85em;
+    color:var(--accent);
+  }
+
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(11,18,32,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;max-width:1120px;margin:0 auto;
+  }
+  .logo{
+    font-family:var(--font-mono);font-weight:700;font-size:1.05rem;letter-spacing:.5px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+  .navlinks{display:flex;gap:28px;font-size:0.95rem;color:var(--text-dim);}
+  .navlinks a:hover{color:var(--text);}
+  .nav-cta{
+    font-family:var(--font-mono);font-size:0.85rem;
+    background:var(--accent);color:#191307;
+    padding:9px 18px;border-radius:6px;font-weight:600;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{filter:brightness(1.08);}
+  .navlinks-wrap{display:flex;align-items:center;gap:32px;}
+  @media (max-width:760px){ .navlinks{display:none;} }
+
+  .hero{padding:76px 0 40px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;} }
+  .eyebrow{
+    font-family:var(--font-mono);color:var(--accent);font-size:0.85rem;
+    display:flex;align-items:center;gap:10px;margin-bottom:18px;letter-spacing:.3px;
+  }
+  .eyebrow .bar{width:26px;height:1px;background:var(--accent);}
+  h1{
+    font-family:var(--font-display);
+    font-size:2.7rem;font-weight:700;line-height:1.25;letter-spacing:-.5px;
+    margin-bottom:20px;
+  }
+  h1 .hl{color:var(--accent);}
+  .hero p.lead{color:var(--text-dim);font-size:1.08rem;max-width:52ch;margin-bottom:30px;}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 24px;border-radius:8px;font-weight:600;font-size:0.95rem;
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--accent);color:#191307;}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{border:1px solid var(--border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--text-dim);}
+
+  .terminal{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02);
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:12px 16px;border-bottom:1px solid var(--border);
+    background:var(--bg-panel-alt);
+  }
+  .terminal-bar span{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .terminal-bar .r{background:#FF5F57;} .terminal-bar .y{background:#FEBC2E;} .terminal-bar .g{background:#28C840;}
+  .terminal-bar .title{
+    margin-inline-start:auto;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-faint);
+  }
+  .terminal-body{
+    padding:22px 20px 26px;font-family:var(--font-mono);font-size:0.86rem;
+    color:#C9D3E4;min-height:230px;
+  }
+  .terminal-body .line{margin-bottom:10px;}
+  .terminal-body .prompt{color:var(--teal);}
+  .terminal-body .cmd{color:var(--text);}
+  .terminal-body .out{color:var(--text-dim);white-space:pre-wrap;}
+  .terminal-body .cursor{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:middle;animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  .metrics{padding:20px 0 70px;}
+  .metrics-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  }
+  @media (max-width:900px){ .metrics-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .metrics-grid{grid-template-columns:1fr;} }
+  .metric-card{
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:20px 18px;
+  }
+  .metric-card .k{
+    font-family:var(--font-mono);font-size:1.55rem;font-weight:700;color:var(--accent);
+    display:block;margin-bottom:6px;
+  }
+  .metric-card .lbl{color:var(--text-dim);font-size:0.86rem;}
+  .metric-card .tag{
+    display:inline-block;margin-top:10px;font-family:var(--font-mono);font-size:0.68rem;
+    color:var(--teal);background:var(--teal-soft);padding:3px 8px;border-radius:4px;
+  }
+
+  section{padding:70px 0;border-top:1px solid var(--border);}
+  .sec-head{margin-bottom:42px;}
+  .sec-eyebrow{
+    font-family:var(--font-mono);color:var(--teal);font-size:0.8rem;margin-bottom:10px;
+  }
+  .sec-eyebrow::before{content:"$ ";color:var(--text-faint);}
+  h2{font-family:var(--font-display);font-size:2rem;font-weight:700;letter-spacing:-.3px;}
+  .sec-sub{color:var(--text-dim);margin-top:10px;max-width:62ch;}
+
+  .pkg-list{
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);
+    font-family:var(--font-mono);font-size:0.87rem;overflow:hidden;
+  }
+  .pkg-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:13px 20px;border-bottom:1px solid var(--border);
+  }
+  .pkg-row:last-child{border-bottom:none;}
+  .pkg-row .name{color:var(--text);}
+  .pkg-row .name::before{content:"▸ ";color:var(--accent);}
+  .pkg-row .status{color:var(--teal);font-size:0.78rem;}
+
+  .timeline{position:relative;padding-left:26px;border-left:1px solid var(--border);}
+  .tl-item{position:relative;padding-bottom:38px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:"";position:absolute;left:-31px;top:4px;
+    width:10px;height:10px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+  }
+  .tl-role{font-family:var(--font-display);font-weight:700;font-size:1.05rem;}
+  .tl-org{color:var(--accent);font-family:var(--font-mono);font-size:0.85rem;margin-top:2px;}
+  .tl-desc{color:var(--text-dim);margin-top:8px;max-width:65ch;font-size:0.95rem;}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){ .grid-3{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .grid-3{grid-template-columns:1fr;} }
+  .svc-card{
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:24px 22px;
+  }
+  .svc-card .ico{
+    width:38px;height:38px;border-radius:8px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+    font-family:var(--font-mono);color:var(--accent);font-weight:700;
+  }
+  .svc-card h3{font-family:var(--font-display);font-size:1.05rem;margin-bottom:8px;}
+  .svc-card p{color:var(--text-dim);font-size:0.92rem;}
+
+  .proj{
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:0;overflow:hidden;margin-bottom:20px;
+    display:grid;grid-template-columns:280px 1fr;
+  }
+  @media (max-width:760px){ .proj{grid-template-columns:1fr;} }
+  .proj-shot{
+    background:linear-gradient(135deg, var(--bg-panel-alt), var(--bg));
+    border-right:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    min-height:180px;font-family:var(--font-mono);font-size:0.78rem;color:var(--text-faint);
+    text-align:center;padding:20px;
+  }
+  @media (max-width:760px){ .proj-shot{border-right:none;border-bottom:1px solid var(--border);} }
+  .proj-body{padding:26px 26px;}
+  .proj-body h3{font-family:var(--font-display);font-size:1.15rem;margin-bottom:6px;}
+  .proj-role{color:var(--accent);font-family:var(--font-mono);font-size:0.78rem;margin-bottom:12px;}
+  .proj-body p{color:var(--text-dim);font-size:0.94rem;margin-bottom:14px;}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .tag{
+    font-family:var(--font-mono);font-size:0.72rem;color:var(--text-dim);
+    border:1px solid var(--border);padding:4px 9px;border-radius:5px;
+  }
+  .proj-metric{
+    font-family:var(--font-mono);font-size:0.82rem;color:var(--teal);
+  }
+  .proj-link{margin-top:14px;display:inline-block;font-size:0.85rem;color:var(--accent);border-bottom:1px solid transparent;}
+  .proj-link:hover{border-color:var(--accent);}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:760px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact-card{
+    background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px;display:flex;align-items:center;gap:16px;
+  }
+  .contact-card .ico{
+    width:42px;height:42px;border-radius:8px;background:var(--teal-soft);color:var(--teal);
+    display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;
+    flex-shrink:0;
+  }
+  .contact-card .lbl{color:var(--text-dim);font-size:0.8rem;margin-bottom:3px;}
+  .contact-card .val{font-family:var(--font-mono);font-size:0.92rem;display:block;}
+
+  footer{
+    border-top:1px solid var(--border);padding:34px 0;
+    color:var(--text-faint);font-size:0.85rem;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  footer .fm{font-family:var(--font-mono);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav>
+    <div class="logo"><span class="dot"></span> <span class="editme">Your Name</span></div>
+    <div class="navlinks-wrap">
+      <div class="navlinks">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="#contact" class="nav-cta">Start a project ›</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="bar"></span> Backend Developer &nbsp;·&nbsp; PHP / Laravel</div>
+      <h1>I build websites and web apps that <span class="hl">actually work</span>, not just look good.</h1>
+      <p class="lead">
+        7+ years of experience designing and building scalable backend systems —
+        from search and booking platforms to online stores with thousands of products.
+        If you've got a web project in mind, let's talk about it.
+      </p>
+      <div class="cta-row">
+        <a href="#work" class="btn btn-primary">View my work</a>
+        <a href="#contact" class="btn btn-ghost">Start a project</a>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="r"></span><span class="y"></span><span class="g"></span>
+        <span class="title">bash — profile.sh</span>
+      </div>
+      <div class="terminal-body" id="term"></div>
+    </div>
+  </div>
+</section>
+
+<section class="metrics">
+  <div class="wrap">
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <span class="k">2–3s → &lt;1s</span>
+        <span class="lbl">Tour search response time cut at Safarmarket</span>
+        <span class="tag">performance</span>
+      </div>
+      <div class="metric-card">
+        <span class="k">&lt;5 min</span>
+        <span class="lbl">Environment setup & deploy with Docker</span>
+        <span class="tag">devops</span>
+      </div>
+      <div class="metric-card">
+        <span class="k">~80%</span>
+        <span class="lbl">Reconciliation effort cut via settlement automation</span>
+        <span class="tag">automation</span>
+      </div>
+      <div class="metric-card">
+        <span class="k">&lt;1s</span>
+        <span class="lbl">Search response over 20–30GB of indexed PDFs (Elasticsearch)</span>
+        <span class="tag">search</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">whoami</div>
+      <h2>About me</h2>
+      <p class="sec-sub">
+        I'm a backend developer focused on PHP and Laravel. Over the years I've worked on
+        search platforms, online stores, and internal enterprise systems — from architecture
+        design to database optimization and server deployment.
+        <span class="editme">[Add a short paragraph about yourself here]</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">composer show --installed</div>
+      <h2>Skills & tools</h2>
+    </div>
+    <div class="pkg-list">
+      <div class="pkg-row"><span class="name">php / laravel</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">mysql / query-optimization</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">redis</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">docker</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">elasticsearch</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">rabbitmq</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">phpunit / tdd</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">google-apis (maps, routes, geocoding)</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">maatwebsite/excel</span><span class="status">stable</span></div>
+      <div class="pkg-row"><span class="name">linux-server-administration</span><span class="status">stable</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">git log --oneline</div>
+      <h2>Experience</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-role">Lead Backend Engineer & Co-Founder</div>
+        <div class="tl-org">STD-ENG</div>
+        <div class="tl-desc">
+          Built a search platform used daily by an 8-person team, saving roughly
+          4.5 hours per engineer per day.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-role">Backend Developer</div>
+        <div class="tl-org">Safarmarket.com</div>
+        <div class="tl-desc">
+          Built a tour search engine with a 2–3 second response time, integrated 25+ APIs
+          powering a new pricing engine and accounting module, and automated settlement
+          reconciliation.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-role">Backend Developer</div>
+        <div class="tl-org">Berankard.com</div>
+        <div class="tl-desc">
+          Launched the Gocart online store with roughly 20,000 products in 9–10 months;
+          a database redesign cut page load time from ~3s to under 1s.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-role">Backend Developer</div>
+        <div class="tl-org">Gilas Software Group</div>
+        <div class="tl-desc">
+          <span class="editme">[Add a short description of this role]</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">services --list</div>
+      <h2>What I can build for you</h2>
+      <p class="sec-sub">If you need any of the below, I'd be happy to talk about your project.</p>
+    </div>
+    <div class="grid-3">
+      <div class="svc-card">
+        <div class="ico">01</div>
+        <h3>Website & web app development</h3>
+        <p>Building a company website, online store, or custom web app with Laravel, from scratch through to deployment.</p>
+      </div>
+      <div class="svc-card">
+        <div class="ico">02</div>
+        <h3>API development & integration</h3>
+        <p>Designing APIs for your mobile app or frontend, and connecting to third-party services (maps, payments, SMS, and more).</p>
+      </div>
+      <div class="svc-card">
+        <div class="ico">03</div>
+        <h3>Database & performance optimization</h3>
+        <p>Finding performance bottlenecks, optimizing queries, and adding caching to speed up your existing system.</p>
+      </div>
+      <div class="svc-card">
+        <div class="ico">04</div>
+        <h3>Deployment & DevOps</h3>
+        <p>Setting up environments with Docker, configuring Linux servers, and simplifying your deployment process.</p>
+      </div>
+      <div class="svc-card">
+        <div class="ico">05</div>
+        <h3>Consulting & code review</h3>
+        <p>Reviewing your current codebase and suggesting improvements to architecture, security, and scalability.</p>
+      </div>
+      <div class="svc-card">
+        <div class="ico">06</div>
+        <h3>Working with international teams</h3>
+        <p>Comfortable communicating in English (TOEFL iBT 85) to work directly with clients and teams abroad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">ls ./projects</div>
+      <h2>Selected work</h2>
+      <p class="sec-sub">
+        A few of the projects I've worked on.
+        <span class="editme">[Replace with a real screenshot and live link for each project]</span>
+      </p>
+    </div>
+
+    <div class="proj">
+      <div class="proj-shot editme">Add project<br>screenshot here</div>
+      <div class="proj-body">
+        <h3>STD-ENG — Internal search platform</h3>
+        <div class="proj-role">Lead Backend Engineer & Co-Founder</div>
+        <p>A search platform used daily by an 8-person team, saving hours of engineering time.</p>
+        <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Elasticsearch</span></div>
+        <div class="proj-metric">~4.5 hrs/engineer/day saved</div>
+        <a href="#" class="proj-link editme">[Project link]</a>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-shot editme">Add project<br>screenshot here</div>
+      <div class="proj-body">
+        <h3>Safarmarket — Tour search engine</h3>
+        <div class="proj-role">Backend Developer</div>
+        <p>A tour search engine integrating 25+ APIs, alongside a new pricing engine, CMS, and accounting module.</p>
+        <div class="tags"><span class="tag">Laravel</span><span class="tag">Redis</span><span class="tag">Google APIs</span></div>
+        <div class="proj-metric">Search response time: 2–3s</div>
+        <a href="#" class="proj-link editme">[Project link]</a>
+      </div>
+    </div>
+
+    <div class="proj">
+      <div class="proj-shot editme">Add project<br>screenshot here</div>
+      <div class="proj-body">
+        <h3>Gocart (Berankard) — Online store</h3>
+        <div class="proj-role">Backend Developer</div>
+        <p>Launched an online store with ~20,000 products and 50+ daily orders; redesigned the database to speed up page loads.</p>
+        <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Docker</span></div>
+        <div class="proj-metric">Page load: ~3s → &lt;1s</div>
+        <a href="#" class="proj-link editme">[Project link]</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">contact --info</div>
+      <h2>Let's talk</h2>
+      <p class="sec-sub">Have a project in mind? Reach me through any of the channels below.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="ico">@</div>
+        <div>
+          <div class="lbl">Email</div>
+          <span class="val editme">your@email.com</span>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="ico">TG</div>
+        <div>
+          <div class="lbl">Telegram</div>
+          <span class="val editme">@yourusername</span>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="ico">in</div>
+        <div>
+          <div class="lbl">LinkedIn</div>
+          <span class="val editme">linkedin.com/in/yourprofile</span>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="ico">GH</div>
+        <div>
+          <div class="lbl">GitHub</div>
+          <span class="val editme">github.com/yourusername</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="fm">© <span id="year"></span> — <span class="editme">Your Name</span></div>
+  <div class="fm">Built with plain HTML / CSS / JS</div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const lines = [
+  {type:'cmd', text:'whoami'},
+  {type:'out', text:'backend-developer · php · laravel · 7+ yrs'},
+  {type:'cmd', text:'cat role.txt'},
+  {type:'out', text:'available for freelance & contract web projects'},
+  {type:'cmd', text:'stack --list'},
+  {type:'out', text:'laravel · mysql · redis · docker · elasticsearch'},
+  {type:'cmd', text:'./contact.sh'},
+  {type:'out', text:'see the form below ↓'}
+];
+
+const term = document.getElementById('term');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function renderStatic(){
+  term.innerHTML = lines.map(l => {
+    if(l.type === 'cmd') return `<div class="line"><span class="prompt">$</span> <span class="cmd">${l.text}</span></div>`;
+    return `<div class="line out">${l.text}</div>`;
+  }).join('');
+}
+
+async function typeLine(el, text, speed){
+  for(let i=0;i<=text.length;i++){
+    el.textContent = text.slice(0,i);
+    await new Promise(r=>setTimeout(r, speed));
+  }
+}
+
+async function playTerminal(){
+  if(reduceMotion){ renderStatic(); return; }
+  term.innerHTML = '';
+  for(const l of lines){
+    const div = document.createElement('div');
+    div.className = 'line';
+    if(l.type === 'cmd'){
+      div.innerHTML = '<span class="prompt">$</span> <span class="cmd"></span>';
+      term.appendChild(div);
+      const cmdEl = div.querySelector('.cmd');
+      await typeLine(cmdEl, l.text, 34);
+      await new Promise(r=>setTimeout(r, 220));
+    } else {
+      div.classList.add('out');
+      div.textContent = l.text;
+      term.appendChild(div);
+      await new Promise(r=>setTimeout(r, 260));
+    }
+  }
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  term.appendChild(cursor);
+}
+
+playTerminal();
+</script>
+
+</body>
+</html>
